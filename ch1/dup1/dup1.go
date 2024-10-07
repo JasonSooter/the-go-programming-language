@@ -14,7 +14,10 @@ func main() {
 	for input.Scan() {
 		counts[input.Text()]++
 	}
-	// NOTE: ignoring potential errors from input.Err()
+	if err := input.Err(); err != nil {
+		fmt.Fprintf(os.Stderr, "error reading input: %v\n", err)
+		os.Exit(1)
+	}
 	for line, n := range counts {
 		if n > 1 {
 			fmt.Printf("%d\t%s\n", n, line)
